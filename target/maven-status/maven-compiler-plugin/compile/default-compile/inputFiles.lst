@@ -4,11 +4,16 @@ C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\servle
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\UsuarioJpaController.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\servlets\SvCerrarSesion.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\servlets\SvNuevaNota.java
+C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\logica\Token.java
+C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\UsuarioJpaController1.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\exceptions\PreexistingEntityException.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\servlets\SvInicioSesion.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\ControladoraPersistencia.java
+C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\servlets\SvRecuperarClave.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\NotaJpaController.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\logica\Controladora.java
+C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\utilidades\Correo.java
+C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\TokenJpaController.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\persistencia\exceptions\IllegalOrphanException.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\logica\Nota.java
 C:\Users\proto\OneDrive\Documents\NetBeansProjects\nNoteWeb\src\main\java\servlets\SvEliminarNota.java

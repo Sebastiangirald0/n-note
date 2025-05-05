@@ -22,6 +22,17 @@ import persistencia.exceptions.NonexistentEntityException;
  * @author NAISHA
  */
 public class NotaJpaController implements Serializable {
+    
+    public List<Nota> traerNotasPorUsuario(int idUsuario) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT n FROM Nota n WHERE n.usuarioPropietario.id = :idUsuario", Nota.class)
+                    .setParameter("idUsuario", idUsuario)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     public NotaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -36,6 +47,10 @@ public class NotaJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
+    
+    
+    
+    
 
     public void create(Nota nota) {
         EntityManager em = null;

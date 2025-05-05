@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import logica.Usuario;
+import org.mindrot.jbcrypt.BCrypt;
 import persistencia.exceptions.NonexistentEntityException;
 
 /**
@@ -37,6 +40,44 @@ public class UsuarioJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
+    
+public Usuario validarUsuario(String correo, String clave) {
+    EntityManager em = null; // Creamos la variable de la conexión (EntityManager).
+    try {
+        em = getEntityManager(); // Obtenemos la conexión a la base de datos mediante el EntityManager.
+        
+        // La consulta JPQL para buscar el usuario por su correo.
+        String jpql = "SELECT u FROM Usuario u WHERE u.correo = :correo"; // Buscamos al usuario por correo, sin necesidad de incluir la clave en esta consulta.
+        
+        // Crear la consulta tipada utilizando EntityManager.
+        TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
+        
+        // Establecer el parámetro "correo" en la consulta.
+        query.setParameter("correo", correo);
+        
+        // Ejecutar la consulta y obtener el usuario.
+        try {
+            // Obtenemos el usuario si existe, si no, lanzará una excepción que manejaremos.
+            Usuario usuario = query.getSingleResult(); // Si el correo existe, nos devuelve un único usuario.
+            
+            // Comprobamos si la contraseña ingresada es la misma que la guardada en la base de datos (que está hasheada).
+            if (BCrypt.checkpw(clave, usuario.getClave())) { // Usamos bcrypt para verificar si las contraseñas coinciden.
+                return usuario; // Si las contraseñas coinciden, devolvemos el usuario.
+            } else {
+                return null; // Si las contraseñas no coinciden, retornamos null.
+            }
+            
+        } catch (Exception e) {
+            // Si no hay resultados o ocurre una excepción (como que el correo no exista), retornamos null.
+            return null;
+        }
+    } finally {
+        if (em != null) {
+            em.close(); // Cerramos la conexión al final para liberar recursos.
+        }
+    }
+}
+
 
     public void create(Usuario usuario) {
         if (usuario.getListaNotas() == null) {
@@ -191,5 +232,68 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
+
+    public boolean validarCorreo(String correo) {
+    EntityManager em = null;
+
+    try {
+        em = getEntityManager();
+
+        // Consulta JPQL que busca un usuario por su correo
+        String jpql = "SELECT u FROM Usuario u WHERE u.correo = :correo";
+
+        TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
+        query.setParameter("correo", correo);
+        query.setMaxResults(1); // Solo nos interesa 1 resultado como mucho
+
+        // Intentamos obtener un resultado
+        List<Usuario> resultados = query.getResultList();
+
+        return !resultados.isEmpty(); // Si hay al menos uno, el correo ya existe
+
+    } finally {
+        if (em != null) {
+            em.close();
+        }
+    }
+}
+
+    public Usuario existeUsuario(String correo) {
+        EntityManager em = null;
+
+        try {
+            em = getEntityManager();
+
+            String jpql = "SELECT u FROM Usuario u WHERE u.correo = :correo";
+
+            TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
+            query.setParameter("correo", correo);
+
+            try {
+                // Intentamos obtener un único resultado
+                Usuario usuario = query.getSingleResult();
+                return usuario;
+            } catch (NoResultException e) {
+                // Si no se encuentra un usuario con el correo, retornamos null
+                return null;
+            } catch (Exception e) {
+                // Capturamos cualquier otra excepción que pueda ocurrir (aunque no es muy común)
+                e.printStackTrace();  // Es una buena práctica loguear la excepción
+                return null;
+            }
+        } finally {
+            // Cerramos la conexión para liberar recursos
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    
+    
+    
+    
+    
+    
     
 }

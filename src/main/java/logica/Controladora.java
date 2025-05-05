@@ -1,6 +1,8 @@
 package logica;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 import persistencia.ControladoraPersistencia;
 
 public class Controladora {
@@ -31,30 +33,15 @@ public class Controladora {
     }
 
     public Usuario validarUsuario(String correo, String clave) {
-        List<Usuario> listaUsuarios = controlPersi.traerUsuarios();
-
-        if (listaUsuarios == null) {
-            return null;
-        }
-
-        for (Usuario usuarioAux : listaUsuarios) {
-            if (usuarioAux.getCorreo().equals(correo) && usuarioAux.getClave().equals(clave)) {
-                return usuarioAux;
-            }
-        }
-
-        return null;
+        return controlPersi.validarUsuario(correo,clave);
+   
     }
 
     public void crearNota(Nota nota) {
         controlPersi.crearNota(nota);
     }
 
-    public List<Nota> traerNotas() {
-        
-        return controlPersi.traerNotas();
-        
-    }
+
 
     public void eliminarNota(int idEliminar) {
         controlPersi.eliminarNota(idEliminar);
@@ -63,4 +50,44 @@ public class Controladora {
     public void editarNota(Nota nota) {
        controlPersi.editarNota(nota);
     }
+
+    public List<Nota> traerNotas(int idUsuario) {
+         return controlPersi.traerNotas(idUsuario);
+    }
+
+    public boolean validarCorreo(String correo) {
+        return controlPersi.validarCorreo(correo);
+    }
+
+    public Usuario existeUsuario(String correo) {
+        return controlPersi.existeUsuario(correo);
+    }
+
+    public void guardarToken(int id, String token, LocalDateTime expiracion) {
+       Token nuevoToken = new Token();
+       
+       nuevoToken.setToken(token);
+       nuevoToken.setExpiracion(expiracion);
+       
+       controlPersi.guardarToken(nuevoToken,id);
+       
+       
+    }
+
+    public Usuario verificarToken(String token) {
+       return controlPersi.verificarToken(token);
+    }
+
+    public void actualizarClave(int id, String nuevaClave) {
+       
+        String claveHasheada = BCrypt.hashpw(nuevaClave, BCrypt.gensalt(12));
+
+        controlPersi.actualizarClave(id,claveHasheada);
+    }
+
+    public void eliminarToken(String token) {
+        controlPersi.eliminarToken(token);
+    }
+
+
 }

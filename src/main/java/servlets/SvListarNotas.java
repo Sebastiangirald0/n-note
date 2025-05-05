@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logica.Controladora;
 import logica.Nota;
+import logica.Usuario;
 
 
 @WebServlet(name = "SvListarNotas", urlPatterns = {"/SvListarNotas"})
@@ -29,7 +30,9 @@ public class SvListarNotas extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        
-        List<Nota> listaNotas = control.traerNotas();
+        int idUsuario = ((Usuario) request.getSession().getAttribute("usuario")).getId();
+        
+        List<Nota> listaNotas = control.traerNotas(idUsuario);
         
         HttpSession sesion = request.getSession(false);
         

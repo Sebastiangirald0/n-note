@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,6 +18,9 @@ public class Nota implements Serializable {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int idNota;
     private String nombreNota;
+    
+
+    @Lob // Esto indica que 'contenidoNota' será un campo largo en la base de datos
     private String contenidoNota;
     
     @Temporal(TemporalType.TIMESTAMP)
