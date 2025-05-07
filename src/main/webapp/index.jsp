@@ -86,6 +86,7 @@
       font-size: 1.1rem;
       text-shadow: 0 0 5px #3A8E8C;
       transition: 0.3s ease;
+      font-family: 'Orbitron', sans-serif;
     }
 
     button:hover {

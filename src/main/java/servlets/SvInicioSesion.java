@@ -49,10 +49,25 @@ public class SvInicioSesion extends HttpServlet {
         Usuario usuario = control.validarUsuario(correo, clave);
         
         if(usuario != null){
-        HttpSession sesionUsuario = request.getSession(true);
-        sesionUsuario.setAttribute("usuario", usuario);
+            
+            if(usuario.getRol().equals("Administrador")){
+                
+              HttpSession sesionUsuario = request.getSession(true);
+                sesionUsuario.setAttribute("usuario", usuario);
+
+                response.sendRedirect("SvListarUsuarios");  
+  
+            }
+            else{
+            
+                HttpSession sesionUsuario = request.getSession(true);
+                sesionUsuario.setAttribute("usuario", usuario);
+
+                response.sendRedirect("SvListarNotas");
+ 
+            }
+            
         
-        response.sendRedirect("SvListarNotas");
         }
         
         else{       

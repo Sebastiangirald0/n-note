@@ -89,5 +89,25 @@ public class Controladora {
         controlPersi.eliminarToken(token);
     }
 
+    public Token existeToken(int id) {
+         return controlPersi.existeToken(id);
+    }
+
+    public List<Usuario> traerUsuarios() {
+        return controlPersi.traerUsuarios();
+    }
+
+    public void editarUsuario(Usuario usuario) {
+        controlPersi.editarUsuario(usuario);
+    }
+
+    public void eliminarUsuario(int id) {
+        controlPersi.eliminarUsuario(id);
+    }
+
+    public Usuario traerUsuario(int id) {
+        return controlPersi.traerUsuario(id);
+    }
+
 
 }

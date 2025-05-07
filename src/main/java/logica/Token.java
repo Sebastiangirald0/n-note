@@ -9,14 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 @Entity
-@NamedQuery(
-    name = "Token.validarToken",
-    query = "SELECT t.usuario FROM Token t WHERE t.token = :token AND t.expiracion > CURRENT_TIMESTAMP"
-)
+@NamedQueries({
+    @NamedQuery(
+        name = "Token.validarToken",
+        query = "SELECT t.usuario FROM Token t WHERE t.token = :token AND t.expiracion > CURRENT_TIMESTAMP"
+    ),
+    @NamedQuery(
+        name = "Token.porUsuario",
+        query = "SELECT t FROM Token t WHERE t.usuario.id = :usuarioId"
+    )
+})
 public class Token implements Serializable {
     
     @Id

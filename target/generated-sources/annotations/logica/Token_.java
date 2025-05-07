@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import logica.Usuario;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2025-05-05T09:34:35")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2025-05-06T18:54:20")
 @StaticMetamodel(Token.class)
 public class Token_ { 
 

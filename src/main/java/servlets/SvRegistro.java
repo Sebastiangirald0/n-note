@@ -42,7 +42,7 @@ public class SvRegistro extends HttpServlet {
         String nombre = request.getParameter("nombre");
         String correo = request.getParameter("correo");
         String clave = request.getParameter("clave");
-        String rol = "estandar"; // El rol por defecto es "estandar"
+        String rol = "Estandar"; // El rol por defecto es "estandar"
 
         // Verificar si el correo ya está registrado (true = duplicado)
         boolean correoDuplicado = control.validarCorreo(correo);

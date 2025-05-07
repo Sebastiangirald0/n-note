@@ -111,5 +111,33 @@ public class ControladoraPersistencia {
         tokenJpa.eliminarTokenPorValor(token);
     }
 
+    public Token existeToken(int id) {
+      return tokenJpa.obtenerTokenPorUsuario(id);
+    }
+
+    public List<Usuario> traerUsuarios() {
+        return usuarioJpa.findUsuarioEntities();
+    }
+
+    public void editarUsuario(Usuario usuario) {
+        try {
+            usuarioJpa.edit(usuario);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void eliminarUsuario(int id) {
+        try {
+            usuarioJpa.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Usuario traerUsuario(int id) {
+        return usuarioJpa.findUsuario(id);
+    }
+
   
 }

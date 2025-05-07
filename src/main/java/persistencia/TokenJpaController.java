@@ -1,6 +1,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -163,4 +164,30 @@ public class TokenJpaController implements Serializable {
         em.close();
     }
     }
+    
+    
+    public Token obtenerTokenPorUsuario(int usuarioId) {
+        EntityManager em = getEntityManager();
+        try {
+            Token token = em.createNamedQuery("Token.porUsuario", Token.class)
+                    .setParameter("usuarioId", usuarioId)
+                    .getSingleResult();
+
+            // Verificar si el token está vencido
+            if (token.getExpiracion().isBefore(LocalDateTime.now())) {
+                em.getTransaction().begin();
+                em.remove(em.merge(token));  // merge por si está en estado detached
+                em.getTransaction().commit();
+                return null;
+            }
+
+            return token;
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
+    
 }
